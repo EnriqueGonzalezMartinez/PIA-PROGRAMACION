@@ -13,9 +13,10 @@ def scraping(url):
         expreciones = [re.compile(r'[\w.-]+@[\w.-]+\.[a-zA-Z]{2,6}'), re.compile(r'facebook.com/\w*'), 
                     re.compile(r'twetter.com/\w*'), 
                     re.compile(r'\(\d{2}\)\d{4}-\d{4}|\(\d{2}\) \d{4} \d{4}|\(\d{2}\)\d{8}|\d{6}-\d{4}|\d{6} \d{4}')]
-        os.makedirs('Scraping', exist_ok=True)
+        dir = url[url.find('/w') + 1:url.rfind('/')]
+        os.makedirs(dir, exist_ok=True)
         # Se crea el archivo data.txt
-        with open('Scraping/data.txt','w+') as file:
+        with open(f'{dir}/data.txt','w+') as file:
             for exp in expreciones:
                 # Se busca la informacion en el html de la web
                 search = exp.findall(str(soup))
@@ -36,12 +37,12 @@ def scraping(url):
             # Se crea el nombre de la imagen
             last = img.rfind('/')
             img_name = img[last + 1:]
-            with open('Scraping/'+ img_name,'wb') as file:
+            with open(f'{dir}/'+ img_name,'wb') as file:
                 try:
                     file.write(requests.get(img).content)
                     print('It is downloaded:'+ img_name)
                 except Exception as e:
-                    os.remove('Scraping/'+ img_name)
+                    os.remove(f'{dir}/'+ img_name)
                     logg(e)
     except Exception as e:
         print('The URL is incorrect try again.')
