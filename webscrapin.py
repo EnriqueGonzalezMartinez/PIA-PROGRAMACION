@@ -12,9 +12,9 @@ def scraping(url):
         expreciones = [re.compile(r'[\w.-]+@[\w.-]+\.[a-zA-Z]{2,6}'), re.compile(r'facebook.com/\w*'), 
                     re.compile(r'twetter.com/\w*'), 
                     re.compile(r'\(\d{2}\)\d{4}-\d{4}|\(\d{2}\) \d{4} \d{4}|\(\d{2}\)\d{8}|\d{6}-\d{4}|\d{6} \d{4}')]
-        os.makedirs('Scraping', exist_ok=True)
+        os.makedirs(url, exist_ok=True)
         # Se crea el archivo data.txt
-        with open('Scraping/data.txt','w+') as file:
+        with open(url+'/data.txt','w+') as file:
             for exp in expreciones:
                 # Se busca la informacion en el html de la web
                 search = exp.findall(str(soup))
@@ -44,7 +44,6 @@ def scraping(url):
     except:
         print('La URL es incorrecta intente de nuevo.')
 
-scraping('https://www.servic')
 
 
     

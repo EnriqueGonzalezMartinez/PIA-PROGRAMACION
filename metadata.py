@@ -12,7 +12,7 @@ def sacandoMeta(opc, path):
             # Se enlista el contenido de la carpeta
             ls = os.listdir(path)
             # Se pasa un filto para que solo queden los .jpg
-            ls = [path +'/'+ x for x in ls if x.endswith('.jpg')]
+            ls = [path +'/'+ x for x in ls if x.endswith('.jpg') or x.endswith('.png')]
             # Se verifica que haya .jpg en la lista
             if (ls != []):
                 for img in ls:   
@@ -75,4 +75,3 @@ def metaPdf(path):
         for meta in info:
             file.write(f'{meta:14} : {info[meta]}\n')
 
-sacandoMeta('2','C:/Users/Adrian/Downloads')
