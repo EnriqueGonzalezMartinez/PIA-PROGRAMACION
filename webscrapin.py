@@ -1,6 +1,7 @@
 import os
 import re
 import requests
+import logging
 from bs4 import BeautifulSoup as bs
 
 def scraping(url):
@@ -12,15 +13,15 @@ def scraping(url):
         expreciones = [re.compile(r'[\w.-]+@[\w.-]+\.[a-zA-Z]{2,6}'), re.compile(r'facebook.com/\w*'), 
                     re.compile(r'twetter.com/\w*'), 
                     re.compile(r'\(\d{2}\)\d{4}-\d{4}|\(\d{2}\) \d{4} \d{4}|\(\d{2}\)\d{8}|\d{6}-\d{4}|\d{6} \d{4}')]
-        os.makedirs(url, exist_ok=True)
+        os.makedirs('Scraping', exist_ok=True)
         # Se crea el archivo data.txt
-        with open(url+'/data.txt','w+') as file:
+        with open('Scraping/data.txt','w+') as file:
             for exp in expreciones:
                 # Se busca la informacion en el html de la web
                 search = exp.findall(str(soup))
                 for sh in search:
                     file.write(f'{sh}\n')
-            print('Se creo el archivo data.txt')
+            print('The data file was data.txt')
         # Busca las etiquetas img con src
         images = soup.find_all('img', src=True)
         # Se crea una lista con los elementos de images que terminan con .jpg
@@ -38,11 +39,27 @@ def scraping(url):
             with open('Scraping/'+ img_name,'wb') as file:
                 try:
                     file.write(requests.get(img).content)
-                    print('Se descargo:'+ img_name)
-                except:
+                    print('It is downloaded:'+ img_name)
+                except Exception as e:
                     os.remove('Scraping/'+ img_name)
-    except:
-        print('La URL es incorrecta intente de nuevo.')
+                    logg(e)
+    except Exception as e:
+        print('The URL is incorrect try again.')
+        logg(e)
+
+def logg(e):
+    #cambiar el logger dependiendo del programa y se establece nivel 
+    logger = logging.getLogger('WebScraping')
+    logger.setLevel(logging.DEBUG)
+    fh = logging.FileHandler('debug.log')
+    fh.setLevel(logging.DEBUG)
+    logger.addHandler(fh)
+    #se le asigna un formato
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    fh.setFormatter(formatter)
+    logger.addHandler(fh)
+    logger.error(e)
+
 
 
 

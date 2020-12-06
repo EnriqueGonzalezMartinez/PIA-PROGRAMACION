@@ -1,5 +1,7 @@
+
 from cryptography.fernet import Fernet
 import os
+import logging
 from datetime import datetime
 #parser = argparse.ArgumentParser()
 #parser.add_argument("-archivo", type=str, help="url del sitio web", required=True)
@@ -23,8 +25,9 @@ def main(path,clave,opc,opc2):
     elif opc == 'no':
         try:
             clave = leer_clave(clave)
-        except:
+        except Exception as e:
             print('Invalid key or A key was not entered.')
+            logg(e)
             exit()
     else:
         print('Invalid option.')
@@ -43,8 +46,9 @@ def main(path,clave,opc,opc2):
                 print(f'The file {path} was decrypted.')
             elif index == 1:
                 print(f'The file {path} was crypted.')
-        except:
+        except Exception as e:
              print(f'the file could not be encrypted or desencrypted: {path}')
+             logg(e)
     elif os.path.isdir(path):
         ls = os.listdir(path)
         ls = [path+'/'+x for x in ls]
@@ -55,8 +59,10 @@ def main(path,clave,opc,opc2):
                     print(f'The file {file} was decrypted.')
                 elif index == 1:
                     print(f'The file {file} was crypted.')
-            except:
+            except Exception as e:
                 print(f'the file could not be encrypted or desencrypted: {file}')
+                logg(e)
+
     else:
         print('The path is invalid.')
     
@@ -91,3 +97,16 @@ def desencriptar(path,clave):
     decrypted_data = f.decrypt(encrypted_data)
     with open(path,'wb') as file:
         file.write(decrypted_data)
+
+def logg(e):
+    #cambiar el logger dependiendo del programa y se establece nivel 
+    logger = logging.getLogger('Encrypt')
+    logger.setLevel(logging.DEBUG)
+    fh = logging.FileHandler('debug.log')
+    fh.setLevel(logging.DEBUG)
+    logger.addHandler(fh)
+    #se le asigna un formato
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    fh.setFormatter(formatter)
+    logger.addHandler(fh)
+    logger.error(e)
