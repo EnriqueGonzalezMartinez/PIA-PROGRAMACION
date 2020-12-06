@@ -48,6 +48,7 @@ def chooseScan(target, rango):
 
     scanner(target,begin,end)
 
+
 def scanner(target,begin,end):
     scanner = nmap.PortScanner()
 
@@ -76,6 +77,7 @@ def scanner(target,begin,end):
                     for port in lport:
                         raw.write('port : %s\tstate : %s' % (port, scanner[host][proto][port]['state'])+"\n")
 
+
 def logg(e):
     #cambiar el logger dependiendo del programa y se establece nivel 
     logger = logging.getLogger('Scan Nmap')
@@ -88,4 +90,3 @@ def logg(e):
     fh.setFormatter(formatter)
     logger.addHandler(fh)
     logger.error(e)
-

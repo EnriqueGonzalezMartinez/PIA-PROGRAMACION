@@ -1,6 +1,5 @@
 from twilio.rest import Client
 import logging
-import getpass
 
 def sendSMS(accountSID,authToken,sender,recipient,text):
     try:
@@ -17,8 +16,8 @@ def sendSMS(accountSID,authToken,sender,recipient,text):
              exit()
 
         
-        message = twilioCli.messages.create(to = senderNumber,
-                                                from_ = myTwilioNumber,
+        message = twilioCli.messages.create(to = recipientNumber,
+                                                from_ = senderNumber,
                                                 body = msg)
         print("message sent successfully")
     except Exception as e:
@@ -38,4 +37,3 @@ def logg(e):
     fh.setFormatter(formatter)
     logger.addHandler(fh)
     logger.error(e)
-

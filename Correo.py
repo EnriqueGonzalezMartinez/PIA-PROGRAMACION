@@ -7,20 +7,6 @@ from email.mime.image import MIMEImage
 from email.mime.text import MIMEText
 from email import encoders
 
-"""
-parser = argparse.ArgumentParser()
-parser.add_argument("-user", type=str, help="Mail you're going to use to send the email", required=True)
-parser.add_argument("-pasw", type=str, help="Password of the email you're going to use", required=True)
-parser.add_argument("-to", type=str, help="Recipient's mail", required=True)
-parser.add_argument("-subject", type=str, help="Email subject", required=True)
-parser.add_argument("-message", type=str, help="Email message", required=True)
-parser.add_argument("-path", type=str, help="absolute path of the file to attach")
-parser.add_argument("-opc", type=int, help="Option 1 - send an email with an attachment , Option 2 - Send an email with text only", required=True)
-params = parser.parse_args()
-"""
-#opc = 1 : Enviar un correo con un archivo adjunto, opc = 2 : Enviar un correo con solo texto
-
-
 def email(user,pasw,to,subject,message,path):
 
     msg = MIMEMultipart()
@@ -105,12 +91,3 @@ def logg(e):
     fh.setFormatter(formatter)
     logger.addHandler(fh)
     logger.error(e)
-
-user = "test2.fcfm.pc@gmai.com"
-pasw = "pc.test#1234"
-to = "adriangzz2001@gmail.com"
-subject = 'No estes chingando 5.0'
-message = 'Esta es un prueba #1'
-path = 'C:/Users/Adrian/Downloads'
-
-email(user,pasw,to,subject,message,path)

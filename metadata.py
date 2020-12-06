@@ -4,49 +4,32 @@ from PIL import Image
 from PIL.ExifTags import TAGS
 from PyPDF2 import PdfFileReader
 
-def sacandoMeta(opc, path):
-    # La primera opcion es para saber si se sacara metadata
-    # de una imagen o un pedf
-    if (opc == '1'):
+def gettingMeta(path):
         # Se compurba que la path sea a una carpeta
         if (os.path.isdir(path)):
             # Se enlista el contenido de la carpeta
             ls = os.listdir(path)
-            # Se pasa un filto para que solo queden los .jpg
-            ls = [path +'/'+ x for x in ls if x.endswith('.jpg')]
-            # Se verifica que haya .jpg en la lista
-            if (ls != []):
-                for img in ls:   
+            # Se pasa un filto para que solo queden los .jpg, .png o .pdf
+            imgs = [path +'/'+ x for x in ls if x.endswith('.jpg') or x.endswith('.png')]
+            pdfs = [path +'/'+ x for x in ls if x.endswith('.pdf')]
+            # Se verifica que haya .jpg, .png o .pdf en las listas
+            if (imgs != [] or pdfs != []):
+                for img in imgs:   
                     metaImg(img)
+                for pdf in pdfs:
+                    metaPdf(pdf)
             else:
-                print('No .jpg found in folder.')
+                print('No .pdf, .jpg, .png found in folder.')
         # Se comprueba que la path sea un archivo .jpg
         elif (os.path.isfile(path) and path.endswith('.jpg')):
             metaImg(path)
-        else:
-            print('The path does not point to a .jpg file or is incorrect.')
-
-    elif (opc == '2'):
-        if (os.path.isdir(path)):
-            ls = os.listdir(path)
-            ls = [path +'/'+ x for x in ls if x.endswith('.pdf')]
-            if (ls != []):
-                for pdf in ls:
-                    metaPdf(pdf)
-            else:
-                print('No .pdf files found in the folder.')
-        elif(os.path.isfile(path) and path.endswith('.pdf')):
+        elif (os.path.isfile(path) and path.endswith('.pdf')):
             metaPdf(path)
         else:
-            print('The path does not point to a .pdf file or is incorrect.')
-    else:
-        print('That is not a valid option, try again
-
-.')
+            print('The path does not point to a .pdf or .jpg or .png file.')
 
 
 def metaImg(path):
-    print(f"Getting the metadata of the image: {path}")
     # Imagename recive el path de la imagen 
     imagename = path
     # Se lee la data de la imagen
@@ -56,7 +39,8 @@ def metaImg(path):
     # Se saca el nombre de la imagen
     lt = imagename.rfind('.')
     name = imagename[:lt] + '.txt'
-    print(f'The file was created: {name}')
+    name1 = imagename[imagename.rfind('/'):]
+    print(f"Getting the metadata of the image: {name1}")
     try:
         with open(name,'w') as file:
             for tag_id in exifdata:
@@ -73,11 +57,12 @@ def metaImg(path):
 
 
 def metaPdf(path):
-    print(f'Getting metadata from PDF: {path}')
     pdfFile = PdfFileReader(open(path,'rb'))
     info = pdfFile.getDocumentInfo()
     lt = path.rfind('.')
     name = path[:lt] + '.txt'
+    name1 = path[path.rfind('/'):]
+    print(f'Getting metadata from PDF: {name1}')
     try:
         with open(name,'w') as file:
             for meta in info:
@@ -85,6 +70,7 @@ def metaPdf(path):
     except Exception as e:
         print("Error getting metadata")
         logg(e)
+
 
 def logg(e):
     #cambiar el logger dependiendo del programa y se establece nivel 
@@ -98,6 +84,3 @@ def logg(e):
     fh.setFormatter(formatter)
     logger.addHandler(fh)
     logger.error(e)
-
-
-sacandoMeta('2',"PIA-PROGRAMACION-main")

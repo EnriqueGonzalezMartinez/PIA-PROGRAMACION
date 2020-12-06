@@ -47,6 +47,7 @@ def scraping(url):
         print('The URL is incorrect try again.')
         logg(e)
 
+
 def logg(e):
     #cambiar el logger dependiendo del programa y se establece nivel 
     logger = logging.getLogger('WebScraping')
@@ -59,8 +60,3 @@ def logg(e):
     fh.setFormatter(formatter)
     logger.addHandler(fh)
     logger.error(e)
-
-
-
-
-    

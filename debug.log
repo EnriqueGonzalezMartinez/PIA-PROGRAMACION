@@ -1,0 +1,44 @@
+2020-12-06 13:21:22,793 - Send SMS - ERROR - name 'myTwilioNumber' is not defined
+2020-12-06 13:22:34,429 - Send SMS - ERROR - 
+[31m[49mHTTP Error[0m [37m[49mYour request was:[0m
+
+[36m[49mPOST /Accounts/ACc6452d832841808af0474692175c4b9e/Messages.json[0m
+
+[37m[49mTwilio returned the following information:[0m
+
+[34m[49mUnable to create record: The 'From' number (205) 574-3834 is not a valid phone number, shortcode, or alphanumeric sender ID.[0m
+
+[37m[49mMore information may be available here:[0m
+
+[34m[49mhttps://www.twilio.com/docs/errors/21212[0m
+
+
+2020-12-06 13:23:37,969 - Send SMS - ERROR - 
+[31m[49mHTTP Error[0m [37m[49mYour request was:[0m
+
+[36m[49mPOST /Accounts/ACc6452d832841808af0474692175c4b9e/Messages.json[0m
+
+[37m[49mTwilio returned the following information:[0m
+
+[34m[49mUnable to create record: The 'From' number 205574-3834 is not a valid phone number, shortcode, or alphanumeric sender ID.[0m
+
+[37m[49mMore information may be available here:[0m
+
+[34m[49mhttps://www.twilio.com/docs/errors/21212[0m
+
+
+2020-12-06 13:23:51,916 - Send SMS - ERROR - 
+[31m[49mHTTP Error[0m [37m[49mYour request was:[0m
+
+[36m[49mPOST /Accounts/ACc6452d832841808af0474692175c4b9e/Messages.json[0m
+
+[37m[49mTwilio returned the following information:[0m
+
+[34m[49mUnable to create record: The 'From' number 2055743834 is not a valid phone number, shortcode, or alphanumeric sender ID.[0m
+
+[37m[49mMore information may be available here:[0m
+
+[34m[49mhttps://www.twilio.com/docs/errors/21212[0m
+
+
+2020-12-06 14:56:02,237 - Metadata - ERROR - Invalid API key

@@ -1,25 +1,17 @@
-
 from cryptography.fernet import Fernet
 import os
 import logging
 from datetime import datetime
-#parser = argparse.ArgumentParser()
-#parser.add_argument("-archivo", type=str, help="url del sitio web", required=True)
-#parser.add_argument("-mensaje", type=str, help="url del sitio web", required=True)
-#parser.add_argument("-clave", type=str, help="url del sitio web")
-#parser.add_argument("-path", type=str, help="url del sitio web", required=True)
-#parser.add_argument("-opc", type=str, help="url del sitio web", required=True)
-#parser.add_argument("-opc2", type=str, help="url del sitio web", required=True)
-#params = parser.parse_args()
+
 nombre = ''
 
-def main(path,clave,opc,opc2):
+def maincrypt(path,clave,opc,opc2):
     pwd = os.getcwd().replace('\\','/')
     if path == pwd:
         print('It is not possible to encrypt or decrypt the folder in which the script runs.')
         exit()
     op = [desencriptar,encriptar]
-    if opc == 'yes' and clave == None and opc2 == 'encriptar':
+    if opc == 'yes' and clave == None and opc2 == 'encrypt':
         generar_clave()
         clave = leer_clave(nombre)
     elif opc == 'no':
@@ -32,9 +24,9 @@ def main(path,clave,opc,opc2):
     else:
         print('Invalid option.')
         exit()
-    if opc2 == 'desencriptar':
+    if opc2 == 'decrypt':
         index = 0
-    elif opc2 == 'encriptar':
+    elif opc2 == 'encrypt':
         index = 1
     else:
         print('Invalid option.')
@@ -77,6 +69,7 @@ def generar_clave():
     with open(nombre, "wb") as archivo_clave:
         archivo_clave.write(clave)
 
+
 def leer_clave(path):
    return open(path,"rb").read()
 
@@ -97,6 +90,7 @@ def desencriptar(path,clave):
     decrypted_data = f.decrypt(encrypted_data)
     with open(path,'wb') as file:
         file.write(decrypted_data)
+
 
 def logg(e):
     #cambiar el logger dependiendo del programa y se establece nivel 
