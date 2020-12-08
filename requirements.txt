@@ -1,0 +1,9 @@
+twilio==6.49.0
+python_nmap==0.6.1
+cryptography==3.1.1
+requests==2.24.0
+shodan==1.24.0
+beautifulsoup4==4.9.3
+nmap==0.0.1
+Pillow==8.0.1
+PyPDF2==1.26.0
