@@ -11,8 +11,12 @@ def ipValid(target):
         return False
 
 def webValid(target):
-    index = target.find('https://')
-    target = target[index + 1:]
+    index = target.find('//')
+    ind = target.rfind('/')
+    if index + 1 != ind:
+        target = target[index + 2:ind]
+    else:
+        target = target[index + 2:]
     try:
         socket.gethostbyname_ex(target)
         return True
@@ -21,7 +25,6 @@ def webValid(target):
         
 
 def chooseScan(target, rango):
-    rango = str(rango)
     if rango != None and len(rango) >= 3 and ipValid(target) and rango.find('-') != -1:
        try:
             index = rango.find('-')
@@ -34,27 +37,34 @@ def chooseScan(target, rango):
             logg(e)
             print('Invalid range or attribute set is incorrect.')
             exit()
-    elif rango == None and ipValid(target) and rango != '':
+    elif rango == None and ipValid(target):
         begin, end = 0, 0
         j = target.rfind('.')
-        target = target[0:j] +"0/24"
-    elif rango == None and webValid(target) and rango != '':
-        index = target.find('https://')
-        target = target[index + 1:]
+        target = target[:j] +".0/24"
+    elif rango == None and webValid(target):
+        index = target.find('//')
+        ind = target.rfind('/')
+        if index + 1 != ind:
+            target = target[index + 2:ind]
+        else:
+            target = target[index + 2:]
         begin, end = 0, 0
     else:
         print('Invalid range or attribute set is incorrect.')
         exit()
 
     scanner(target,begin,end)
+    print('Scan Finished.')
 
 
 def scanner(target,begin,end):
     scanner = nmap.PortScanner()
-
     if begin < end:
-        nombre = f'Ip scanning({datetime.now()}).txt'
-        with open(r"Scan.txt", "w+") as raw:
+        date = str(datetime.now()).replace(':','-')
+        p = date.find('.')
+        nombre = f'Web scanning({date[:p]}).txt'
+        print('Scanning...')
+        with open(nombre, "w+") as raw:
             for i in range(begin,end+1):
                 res = scanner.scan(target,str(i))
                 res = res["scan"][target]["tcp"][i]["state"]
@@ -62,9 +72,12 @@ def scanner(target,begin,end):
                    raw.write("port "+str(i)+" is "+str(res)+"\n")
                    
     else:
+        print('Scanning...')
         scanner.scan(target)
-        nombre = f'Web scanning({datetime.now()}).txt'
-        with open(r"Scan.txt", "w+") as raw:
+        date = str(datetime.now()).replace(':','-')
+        p = date.find('.')
+        nombre = f'Web scanning({date[:p]}).txt'
+        with open(nombre, "w+") as raw:
             for host in scanner.all_hosts():
                 raw.write("----------------------------------------------------\n")
                 raw.write("Host : %s (%s)" % (host, scanner[host].hostname())+ "\n")

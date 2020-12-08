@@ -59,7 +59,7 @@ if __name__ == "__main__":
     elif (params.tool == 5):
         maincrypt(params.path,params.key,params.opc,params.opc2)
     elif (params.tool == 6):
-        email(params.user, params.pasw, params.to, params.subject, params.message)
+        email(params.user, params.pasw, params.to, params.subject, params.message, params.path)
     elif (params.tool == 7):
         API(params.apiKey, params.port)
     else:
