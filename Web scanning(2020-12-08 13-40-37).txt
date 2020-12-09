@@ -1,5 +1,0 @@
-----------------------------------------------------
-Host : 172.217.15.14 (google.com)
-port : 25	state : open
-port : 80	state : open
-port : 443	state : open
